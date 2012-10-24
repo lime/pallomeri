@@ -17,6 +17,9 @@ PApplet applet;
 
 public Kuvanlukija(String kuvannimi, PApplet applet){
 	 this.applet = applet;
+	 if(kuvannimi == null) {
+		 kuvannimi = "/data/default.jpg";
+	 }
 	 this.img = applet.loadImage(kuvannimi);
 	  
 	 /*Pitänee ottaa koko huomioon jotenkin...img.resize(applet.width-20, 0); */
