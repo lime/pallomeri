@@ -8,7 +8,7 @@ import processing.core.PImage;
 public class Kuvanlukija {
 /**
  * 	
- * @param kuvannimi
+ * @param kuvannimi tiedoston nimi, joka pitäisi lukea
  * @param applet se processing-applet jonka yhteydessä ollaan
  */
 	
@@ -25,8 +25,13 @@ public Kuvanlukija(String kuvannimi, PApplet applet){
 	  img.loadPixels();
 	  
 }
-	
+public int annaLeveys(){
+	return img.width;
+}
 
+public int annaKorkeus(){
+	return img.height;
+}
 
 public Pallo luePikseli(int x, int y){
 	 
