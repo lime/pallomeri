@@ -1,11 +1,10 @@
 *.class
+bin/
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# Eclipse files #
-.settings
-.project
+# Eclipse project files #
 .classpath
+.project
+.settings/
+
+# Mac files #
+.DS_STORE
