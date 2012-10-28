@@ -56,7 +56,7 @@ public class Pallomeri extends PApplet {
 		
 		// Päivitä ja piirrä pallot
 		for(Pallo pallo : this.pallot) {
-			pallo.liiku();
+			pallo.liiku(this);
 			pallo.piirra(this);
 		}
 	}

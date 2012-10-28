@@ -12,11 +12,6 @@ public class Pallo {
 	private float loppuX, loppuY;
 	private int vari;
 	private float koko;
-
-	// Liike
-	private final double liike = 0.1;
-	private double kuljettuMatka;
-	private double matkaY, matkaX;
 	
 	// Vakiot
 	private static final float SKAALA = 3.0f;
@@ -38,61 +33,28 @@ public class Pallo {
 		return y;
 	}
 
-	public void liiku() {
+	public void liiku(PApplet applet) {
 		
-		matkaX = loppuX - x;
-		matkaY = loppuY - y;
+		this.x += laskeSiirto(x, loppuX);
+		this.y += laskeSiirto(y, loppuY);
 		
-		this.x += liike * matkaX;
-		this.y += liike * matkaY;
+		if(applet.mousePressed) {
+			this.x += laskeSiirto(x, applet.mouseX);
+			this.y += laskeSiirto(y, applet.mouseY);
+		}
 
-		/*float eksponentti = 4;
+	}
 
-		kuljettuMatka = 0.0;
-
-		kuljettuMatka += liike;
-
-		if (kuljettuMatka < 1.0) {
-
-			this.x += (kuljettuMatka * matkaX);
-			this.y += (Math.pow(kuljettuMatka, eksponentti) * matkaY);
-
-		} else {
-			kuljettuMatka = 0.0;
-			matkaX = loppuX - x;
-			matkaY = loppuY - y;
-		}*/
-
+	private double laskeSiirto(float koordinaatti, float paamaara) {
+		// lasketaan matkan pituus toivottuun päämäärään
+		double matka = paamaara - koordinaatti;
+		// 0.01 * matka // tietty osa jäljellä olevasta matkasta
+		return matka / 300.0;
 	}
 
 	public void piirra(PApplet applet) {
 		applet.fill(this.vari);
 		applet.ellipse(this.x, this.y, this.koko, this.koko);
 	}
-
-	/*
-	 * void setup() {
-	 * 
-	 * size(400, 400); noStroke(); smooth();
-	 * 
-	 * matkaX = loppuX - alkuX; matkaY = loppuY - alkuY;
-	 * 
-	 * }
-	 * 
-	 * 
-	 * void draw() {
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 * 
-	 * void mousePressed() {
-	 * 
-	 * kuljettuMatka = 0.0; alkuX = x; alkuY = y; loppuX = mouseX; loppuY =
-	 * mouseY; matkaX = loppuX - alkuX; matkaY = loppuY - alkuY;
-	 * 
-	 * }
-	 */
 
 }
