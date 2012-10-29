@@ -51,7 +51,7 @@ public class Pallomeri extends PApplet {
 		this.background(this.color(32, 38, 39));
 		
 		// Päivitä valikko ja piirrä se näytölle
-		this.valikko.draw();
+		this.valikko.render();
 		this.image(valikko.getGraphics(), 0.0f, this.height - valikko.height);
 		
 		// Päivitä ja piirrä pallot

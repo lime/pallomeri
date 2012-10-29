@@ -22,7 +22,7 @@ public class Valikko {
 	/**
 	 * Tässä metodissa voi tehdä muutoksia valikolle
 	 */
-	public void draw() {
+	public void render() {
 		g.beginDraw(); // aloita
 
 		g.background(applet.color(58, 63, 64));
