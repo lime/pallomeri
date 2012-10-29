@@ -23,45 +23,51 @@ public class Pallomeri extends PApplet {
 		// Koko
 		this.size(WIDTH, HEIGHT);
 		
-		String kuvanNimi = null; // TODO hoida tämä
-		
 		this.pallot = new HashSet<Pallo>();
+
+		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
+		this.valikko = new Valikko(this.width, VALIKKO_HEIGHT, this);
 		
+		// Valitse ensimänen kuva (oletus)
+		this.vaihdaKuva(null);
+	}
+
+	/**
+	 * Valitse uusi kuva jota ladataan muistiin ja ruvetaan näyttää
+	 * @param kuvanNimi
+	 */
+	public void vaihdaKuva(String kuvanNimi) {
 		// Luodaan uusi Kuvanlukija
 		this.lukija = new Kuvanlukija(kuvanNimi, this);
 
-		
-		for (int x = 0; x < lukija.annaLeveys(); x+=PIXEL_ASKEL) {
-			for (int y = 0; y < lukija.annaKorkeus(); y+=PIXEL_ASKEL) {
+		for (int x = 0; x < lukija.annaLeveys(); x += PIXEL_ASKEL) {
+			for (int y = 0; y < lukija.annaKorkeus(); y += PIXEL_ASKEL) {
 				Pallo pallo = lukija.luePikseli(x, y);
 				this.pallot.add(pallo);
-				//System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
+				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
 			}
 		}
-		
-		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
-		this.valikko = new Valikko(this.width, VALIKKO_HEIGHT, this);
 	}
 
 	public void draw() {
 		// Piirtotyyli
 		noStroke();
 		smooth();
-		
+
 		// Piirrä tausta
 		this.background(this.color(32, 38, 39));
-		
+
 		// Päivitä valikko ja piirrä se näytölle
 		this.valikko.render();
 		this.image(valikko.getGraphics(), 0.0f, this.height - valikko.height);
-		
+
 		// Päivitä ja piirrä pallot
-		for(Pallo pallo : this.pallot) {
+		for (Pallo pallo : this.pallot) {
 			pallo.liiku(this);
 			pallo.piirra(this);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return
