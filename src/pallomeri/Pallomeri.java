@@ -12,6 +12,7 @@ public class Pallomeri extends PApplet {
 
 	private Set<Pallo> pallot;
 	private Valikko valikko;
+	private Kuvanlukija lukija;
 	public static final int WIDTH = 800;
 	private static final int STAGE_HEIGHT = 500;
 	private static final int VALIKKO_HEIGHT = 100;
@@ -27,7 +28,7 @@ public class Pallomeri extends PApplet {
 		this.pallot = new HashSet<Pallo>();
 		
 		// Luodaan uusi Kuvanlukija
-		Kuvanlukija lukija = new Kuvanlukija(kuvanNimi, this);
+		this.lukija = new Kuvanlukija(kuvanNimi, this);
 
 		
 		for (int x = 0; x < lukija.annaLeveys(); x+=PIXEL_ASKEL) {
@@ -59,6 +60,14 @@ public class Pallomeri extends PApplet {
 			pallo.liiku(this);
 			pallo.piirra(this);
 		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Kuvanlukija annaLukija() {
+		return this.lukija;
 	}
 
 	public static Point randomSijainti() {

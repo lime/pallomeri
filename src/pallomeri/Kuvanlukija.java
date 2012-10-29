@@ -39,6 +39,10 @@ public class Kuvanlukija {
 	public int annaKorkeus() {
 		return img.height;
 	}
+	
+	public PImage annaKuva() {
+		return this.img;
+	}
 
 	public Pallo luePikseli(int x, int y) {
 

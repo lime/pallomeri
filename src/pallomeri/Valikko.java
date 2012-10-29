@@ -9,10 +9,10 @@ import processing.core.PImage;
 public class Valikko {
 	
 	private PGraphics g;
-	private PApplet applet;
+	private Pallomeri applet;
 	final float width, height;
 	
-	public Valikko(int width, int height, PApplet applet) {
+	public Valikko(int width, int height, Pallomeri applet) {
 		this.width = width;
 		this.height = height;
 		this.applet = applet;
@@ -27,6 +27,7 @@ public class Valikko {
 
 		g.background(applet.color(58, 63, 64));
 		
+		g.image(this.applet.annaLukija().annaKuva(), 10, 10);
 
 		g.endDraw(); // lopeta
 	}
