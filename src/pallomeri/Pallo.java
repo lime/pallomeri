@@ -48,8 +48,11 @@ public class Pallo {
 	private double laskeSiirto(float koordinaatti, float paamaara) {
 		// lasketaan matkan pituus toivottuun päämäärään
 		double matka = paamaara - koordinaatti;
-		// 0.01 * matka // tietty osa jäljellä olevasta matkasta
-		return matka / 300.0;
+		double siirto;
+
+		siirto = matka / 300; // hidastuu loppuun päin
+		//siirto = matka / Math.pow(matka/5, 4);
+		return siirto;
 	}
 
 	public void piirra(PApplet applet) {
