@@ -1,5 +1,7 @@
 package pallomeri;
 
+import java.util.Random;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -14,11 +16,13 @@ public class Kuvanlukija {
 
 	PImage img;
 	PApplet applet;
+	public static final String albumikuva[] =
+	{"data/Mona_Lisa.jpg", "data/nelson.jpg"};
 
 	public Kuvanlukija(String kuvannimi, PApplet applet) {
 		this.applet = applet;
 		if (kuvannimi == null) {
-			kuvannimi = "/data/default.jpg";
+			kuvannimi = arvokuvataulukosta();
 		}
 		this.img = applet.loadImage(kuvannimi);
 
@@ -30,6 +34,9 @@ public class Kuvanlukija {
 		// ladataan saadun kuvan pikselit pixels[]-jonoon
 		img.loadPixels();
 
+	}
+	private String arvokuvataulukosta() {
+		return albumikuva [new Random().nextInt(albumikuva.length)];
 	}
 
 	public int annaLeveys() {

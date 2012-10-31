@@ -37,8 +37,11 @@ public class Pallomeri extends PApplet {
 	 * @param kuvanNimi
 	 */
 	public void vaihdaKuva(String kuvanNimi) {
-		// Luodaan uusi Kuvanlukija
+		// Luodaan uusi Kuvanlukija - jos null, arvotaan kuva Kuvanlukijan taulukosta
 		this.lukija = new Kuvanlukija(kuvanNimi, this);
+		
+		/* Luodaan uusi Kuvanlukija - jos null arvotaan Albumista
+		this.lukija = new Kuvanlukija(arvokuva().annakuvannimi(), this);*/
 
 		for (int x = 0; x < lukija.annaLeveys(); x += PIXEL_ASKEL) {
 			for (int y = 0; y < lukija.annaKorkeus(); y += PIXEL_ASKEL) {
@@ -47,6 +50,9 @@ public class Pallomeri extends PApplet {
 				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
 			}
 		}
+	}
+	private Albumi arvokuva() {
+		return Albumi.values()[new Random().nextInt(Albumi.values().length)];
 	}
 
 	public void draw() {
