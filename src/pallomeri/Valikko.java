@@ -24,9 +24,15 @@ public class Valikko {
 
 		g.background(pallomeri.color(58, 63, 64));
 		
+		if(this.hiiriKuvanpaalla() == true) {
+			
+		
+		
 		PImage esikatselukuva = this.pallomeri.annaLukija().annaKuva();
 		esikatselukuva.resize(this.annaLeveys()-20, 0);
 		g.image(esikatselukuva, 10, 10);
+		}
+		
 
 		g.endDraw(); // lopeta
 	}
@@ -41,5 +47,10 @@ public class Valikko {
 
 	public int annaKorkeus() {
 		return g.height;
+	}
+	
+	public boolean hiiriKuvanpaalla() {
+		return this.pallomeri.dist(10+this.pallomeri.stageLeveys(), 10, this.pallomeri.mouseX, this.pallomeri.mouseY) < 20;
+			
 	}
 }
