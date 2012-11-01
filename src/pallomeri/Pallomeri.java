@@ -13,23 +13,24 @@ public class Pallomeri extends PApplet {
 	private Set<Pallo> pallot;
 	private Valikko valikko;
 	private Kuvanlukija lukija;
-	public static final int WIDTH = 800;
-	private static final int STAGE_HEIGHT = 500;
-	private static final int VALIKKO_HEIGHT = 100;
-	public static final int HEIGHT = STAGE_HEIGHT + VALIKKO_HEIGHT;
 	static final int PIXEL_ASKEL = 5;
 
 	public void setup() {
 		// Koko
-		this.size(WIDTH, HEIGHT);
+		size(800, 600); // Processing vaatii tarkat arvot
+		//Pallomeri = STAGE_HEIGHT + VALIKKO_HEIGHT
 		
 		this.pallot = new HashSet<Pallo>();
 
 		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
-		this.valikko = new Valikko(this.width, VALIKKO_HEIGHT, this);
+		this.valikko = new Valikko(300, this.height, this);
 		
 		// Valitse ensimänen kuva (oletus)
 		this.vaihdaKuva(null);
+		
+		// Piirtotyyli
+		noStroke();
+		smooth();
 	}
 
 	/**
@@ -56,22 +57,19 @@ public class Pallomeri extends PApplet {
 	}
 
 	public void draw() {
-		// Piirtotyyli
-		noStroke();
-		smooth();
 
 		// Piirrä tausta
 		this.background(this.color(32, 38, 39));
-
-		// Päivitä valikko ja piirrä se näytölle
-		this.valikko.render();
-		this.image(valikko.getGraphics(), 0.0f, this.height - valikko.height);
 
 		// Päivitä ja piirrä pallot
 		for (Pallo pallo : this.pallot) {
 			pallo.liiku(this);
 			pallo.piirra(this);
 		}
+		
+		// Päivitä valikko ja piirrä se näytölle
+		this.valikko.render();
+		this.image(valikko.getGraphics(), this.width - valikko.annaLeveys(), 0f); // piirrä oikealle sivulle
 	}
 
 	/**
@@ -86,4 +84,9 @@ public class Pallomeri extends PApplet {
 		Random RAND = new Random();
 		return new Point(RAND.nextInt(WIDTH), RAND.nextInt(HEIGHT));
 	}
+	
+	public static void main(String args[])
+    {
+      PApplet.main(new String[] { pallomeri.Pallomeri.class.getName() });
+    }
 }

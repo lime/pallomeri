@@ -10,11 +10,8 @@ public class Valikko {
 	
 	private PGraphics g;
 	private Pallomeri applet;
-	final float width, height;
 	
 	public Valikko(int width, int height, Pallomeri applet) {
-		this.width = width;
-		this.height = height;
 		this.applet = applet;
 		g = applet.createGraphics(width, height, PConstants.JAVA2D);
 	}
@@ -34,5 +31,13 @@ public class Valikko {
 
 	public PImage getGraphics() {
 		return g;
+	}
+	
+	public int annaLeveys() {
+		return g.width;
+	}
+
+	public int annaKorkeus() {
+		return g.height;
 	}
 }
