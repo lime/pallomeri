@@ -29,7 +29,7 @@ public class Pallomeri extends PApplet {
 		this.valikko = new Valikko(150, this.height, this);
 
 		// Valitse ensimänen kuva (null = oletus)
-		this.vaihdaKuva(null);
+		this.vaihdaKuva(null, null);
 
 		sDrop = new SDrop(this);
 		
@@ -43,11 +43,17 @@ public class Pallomeri extends PApplet {
 	 * 
 	 * @param kuvanNimi
 	 */
-	public void vaihdaKuva(String kuvanNimi) {
+	public void vaihdaKuva(String kuvanNimi, PImage img) {
 		// Luodaan uusi Kuvanlukija - jos null, arvotaan kuva Kuvanlukijan
 		// taulukosta
 		this.pallot = new HashSet<Pallo>();
-		this.lukija = new Kuvanlukija(kuvanNimi, this);
+		
+		if (img != null){
+			this.lukija = new Kuvanlukija(img, this);
+		}
+		else {
+			this.lukija = new Kuvanlukija(kuvanNimi, this);
+		}
 
 		// Lasketaan paras skaalaaus
 		Asetukset.SKAALA = lukija.laskeSkaala();
@@ -116,7 +122,7 @@ public class Pallomeri extends PApplet {
 		System.out.println("mouseX" + mouseX + "Pallomeri.mouseY " + mouseY);
 		
 		if (valikko.over (stageLeveys()+30, 220, 80, 80)){
-			vaihdaKuva(null);
+			vaihdaKuva(null, null);
 		}
 		else{}
 		
@@ -137,9 +143,24 @@ public class Pallomeri extends PApplet {
 		if (theDropEvent.isImage()) {
 			println("### loading image ...");
 			PImage m = theDropEvent.loadImage();
-			System.out.println("Pallomeri.dropEvent() " + m);
+			odota(1800);	
+			System.out.println("Pallomeri.dropEvent() " + m);			
+			vaihdaKuva(null, m);
 		}
 	}
+	
+	public static void odota (int n){
+
+		long t0, t1;
+
+		t0 =  System.currentTimeMillis();
+
+		do{
+			t1 = System.currentTimeMillis();
+		}
+		while (t1 - t0 < n);
+	}
+
 
 	public static void main(String args[]) {
 		PApplet.main(new String[] { pallomeri.Pallomeri.class.getName() });

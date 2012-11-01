@@ -33,7 +33,7 @@ public class Kuvanlukija {
 	
 	//Kuvanlukija, joka luodaan raahatun kuvan yhteydessä
 	public Kuvanlukija(PImage img, Pallomeri p){
-		this.pallomeri  = p;
+		this.pallomeri = p;
 		this.img = img;
 		pallomeri.loadPixels();
 		img.loadPixels();

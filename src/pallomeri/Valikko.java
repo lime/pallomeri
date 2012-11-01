@@ -89,7 +89,8 @@ public class Valikko {
 			
 	}
 	
-	public void hiirtaPainettu(){
+	//Siirretty Pallomereen..
+/*	public void hiirtaPainettu(){
 		System.out.println("pallomeri.mouseX" + pallomeri.mouseX + "Pallomeri.mouseY " + pallomeri.mouseY);
 		if (over (pallomeri.stageLeveys()+10, 200, 130, 130)){
 			pallomeri.vaihdaKuva(null);
@@ -97,7 +98,7 @@ public class Valikko {
 		else{}
 		
 		System.out.println("pallomeri.mouseX" + pallomeri.mouseX + "Pallomeri.mouseY " + pallomeri.mouseY);
-	}
+	}*/
 
 	public boolean over (int x, int y, int leveys, int korkeus){
     if  (pallomeri.mouseX >= x && pallomeri.mouseX <= x + leveys && pallomeri.mouseY >= y && pallomeri.mouseY <= y + korkeus){
