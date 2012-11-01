@@ -10,27 +10,23 @@ public class Kuvanlukija {
 	 * 
 	 * @param kuvannimi
 	 *            tiedoston nimi, joka pit�isi lukea
-	 * @param applet
+	 * @param pallomeri
 	 *            se processing-applet jonka yhteydessä ollaan
 	 */
 
 	PImage img;
-	PApplet applet;
+	Pallomeri pallomeri;
 	public static final String albumikuva[] =
 	{"data/Mona_Lisa.jpg", "data/nelson.jpg"};
 
-	public Kuvanlukija(String kuvannimi, PApplet applet) {
-		this.applet = applet;
+	public Kuvanlukija(String kuvannimi, Pallomeri p) {
+		this.pallomeri = p;
 		if (kuvannimi == null) {
 			kuvannimi = arvokuvataulukosta();
 		}
-		this.img = applet.loadImage(kuvannimi);
+		this.img = pallomeri.loadImage(kuvannimi);
 
-		/*
-		 * Pitänee ottaa koko huomioon jotenkin...img.resize(applet.width-20,
-		 * 0);
-		 */
-		applet.loadPixels();
+		pallomeri.loadPixels();
 		// ladataan saadun kuvan pikselit pixels[]-jonoon
 		img.loadPixels();
 
@@ -66,7 +62,7 @@ public class Kuvanlukija {
 
 		// jos rgb-arvot kunnossa palautetaan sijainti ja väriarvot, muuten null
 		if (loc >= 0 && loc < img.pixels.length) {
-			return new Pallo(x, y, img.pixels[loc]);
+			return new Pallo(x, y, img.pixels[loc], this.pallomeri);
 		} else {
 			System.err.println("Koordinaateissa "+x+","+y+" ei ole pikseleitä.");
 			return null;

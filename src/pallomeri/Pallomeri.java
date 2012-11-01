@@ -13,19 +13,18 @@ public class Pallomeri extends PApplet {
 	private Set<Pallo> pallot;
 	private Valikko valikko;
 	private Kuvanlukija lukija;
-	static final int PIXEL_ASKEL = 5;
+	final int PIXEL_ASKEL = 5;
 
 	public void setup() {
 		// Koko
 		size(800, 600); // Processing vaatii tarkat arvot
-		//Pallomeri = STAGE_HEIGHT + VALIKKO_HEIGHT
 		
 		this.pallot = new HashSet<Pallo>();
 
 		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
-		this.valikko = new Valikko(300, this.height, this);
+		this.valikko = new Valikko(150, this.height, this);
 		
-		// Valitse ensimänen kuva (oletus)
+		// Valitse ensimänen kuva (null = oletus)
 		this.vaihdaKuva(null);
 		
 		// Piirtotyyli
@@ -63,8 +62,8 @@ public class Pallomeri extends PApplet {
 
 		// Päivitä ja piirrä pallot
 		for (Pallo pallo : this.pallot) {
-			pallo.liiku(this);
-			pallo.piirra(this);
+			pallo.liiku();
+			pallo.piirra();
 		}
 		
 		// Päivitä valikko ja piirrä se näytölle
@@ -80,9 +79,9 @@ public class Pallomeri extends PApplet {
 		return this.lukija;
 	}
 
-	public static Point randomSijainti() {
+	public Point randomSijainti() {
 		Random RAND = new Random();
-		return new Point(RAND.nextInt(WIDTH), RAND.nextInt(HEIGHT));
+		return new Point(RAND.nextInt(this.width), RAND.nextInt(this.height));
 	}
 	
 	public static void main(String args[])
