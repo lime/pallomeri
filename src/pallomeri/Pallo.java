@@ -37,10 +37,10 @@ public class Pallo {
 		this.x += laskeSiirto(x, loppuX);
 		this.y += laskeSiirto(y, loppuY);
 		
-		if(pallomeri.mousePressed) {
+		/*if(pallomeri.mousePressed) { // pallo voisi liikkua lähemmäs hiirtä
 			this.x += laskeSiirto(x, pallomeri.mouseX);
 			this.y += laskeSiirto(y, pallomeri.mouseY);
-		}
+		}*/
 
 	}
 
