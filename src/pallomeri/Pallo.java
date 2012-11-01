@@ -14,17 +14,14 @@ public class Pallo {
 	private float koko;
 	private Pallomeri pallomeri;
 	
-	// Vakiot
-	private static final float SKAALA = 3.0f;
-
 	public Pallo(int x, int y, int color, Pallomeri p) {
 		this.pallomeri = p;
 		this.x = pallomeri.randomSijainti().x;
 		this.y = pallomeri.randomSijainti().y;
-		this.loppuX = x * SKAALA;
-		this.loppuY = y * SKAALA;
+		this.loppuX = x * Asetukset.SKAALA;
+		this.loppuY = y * Asetukset.SKAALA;
 		this.vari = color;
-		this.koko = pallomeri.PIXEL_ASKEL*2; // TODO jonkun arvon perusteella?
+		this.koko = Asetukset.PALLOJEN_KOKO;
 	}
 
 	public float getX() {
@@ -52,7 +49,7 @@ public class Pallo {
 		double matka = paamaara - koordinaatti;
 		double siirto;
 
-		siirto = matka / 300; // hidastuu loppuun päin
+		siirto = matka / Asetukset.VAUHTI; // hidastuu loppuun päin
 		//siirto = matka / Math.pow(matka/5, 4);
 		return siirto;
 	}

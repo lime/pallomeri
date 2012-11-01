@@ -13,7 +13,6 @@ public class Pallomeri extends PApplet {
 	private Set<Pallo> pallot;
 	private Valikko valikko;
 	private Kuvanlukija lukija;
-	final int PIXEL_ASKEL = 5;
 
 	public void setup() {
 		// Koko
@@ -40,11 +39,13 @@ public class Pallomeri extends PApplet {
 		// Luodaan uusi Kuvanlukija - jos null, arvotaan kuva Kuvanlukijan taulukosta
 		this.lukija = new Kuvanlukija(kuvanNimi, this);
 		
-		/* Luodaan uusi Kuvanlukija - jos null arvotaan Albumista
-		this.lukija = new Kuvanlukija(arvokuva().annakuvannimi(), this);*/
+		// Lasketaan paras skaalaaus
+		Asetukset.SKAALA = lukija.laskeSkaala();
 
-		for (int x = 0; x < lukija.annaLeveys(); x += PIXEL_ASKEL) {
-			for (int y = 0; y < lukija.annaKorkeus(); y += PIXEL_ASKEL) {
+		float pikseliVali = (lukija.annaLeveys() / Asetukset.PALLOJEN_MAARA) / Asetukset.SKAALA;
+		System.out.println("Pallomeri.vaihdaKuva()"+pikseliVali+" "+Asetukset.PALLOJEN_MAARA+" "+Asetukset.SKAALA+" "+lukija.annaLeveys());
+		for (int x = 0; x < lukija.annaLeveys(); x += pikseliVali ) {
+			for (int y = 0; y < lukija.annaKorkeus(); y += pikseliVali ) {
 				Pallo pallo = lukija.luePikseli(x, y);
 				this.pallot.add(pallo);
 				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
@@ -68,7 +69,7 @@ public class Pallomeri extends PApplet {
 		
 		// Päivitä valikko ja piirrä se näytölle
 		this.valikko.render();
-		this.image(valikko.getGraphics(), this.width - valikko.annaLeveys(), 0f); // piirrä oikealle sivulle
+		this.image(valikko.getGraphics(), this.stageLeveys(), 0f); // piirrä oikealle sivulle
 	}
 
 	/**
@@ -78,10 +79,21 @@ public class Pallomeri extends PApplet {
 	public Kuvanlukija annaLukija() {
 		return this.lukija;
 	}
+	
+	/**
+	 * Leveys ilman valikkoa
+	 */
+	public int stageLeveys() {
+		return this.width - this.valikko.annaLeveys();
+	}
+	
+	public int stageKorkeus() {
+		return this.height;
+	}
 
 	public Point randomSijainti() {
 		Random RAND = new Random();
-		return new Point(RAND.nextInt(this.width), RAND.nextInt(this.height));
+		return new Point(RAND.nextInt(this.stageLeveys()), RAND.nextInt(this.stageKorkeus()));
 	}
 	
 	public static void main(String args[])

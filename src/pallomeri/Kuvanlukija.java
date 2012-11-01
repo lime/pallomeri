@@ -9,13 +9,14 @@ public class Kuvanlukija {
 	/**
 	 * 
 	 * @param kuvannimi
-	 *            tiedoston nimi, joka pit�isi lukea
+	 *            tiedoston nimi, joka pitäisi lukea
 	 * @param pallomeri
 	 *            se processing-applet jonka yhteydessä ollaan
 	 */
 
-	PImage img;
-	Pallomeri pallomeri;
+	private PImage img;
+	private Pallomeri pallomeri;
+	private int xSiirto, ySiirto;
 	public static final String albumikuva[] =
 	{"data/Mona_Lisa.jpg", "data/nelson.jpg"};
 
@@ -62,12 +63,27 @@ public class Kuvanlukija {
 
 		// jos rgb-arvot kunnossa palautetaan sijainti ja väriarvot, muuten null
 		if (loc >= 0 && loc < img.pixels.length) {
-			return new Pallo(x, y, img.pixels[loc], this.pallomeri);
+			return new Pallo(x - xSiirto, y - ySiirto, img.pixels[loc], this.pallomeri);
 		} else {
 			System.err.println("Koordinaateissa "+x+","+y+" ei ole pikseleitä.");
 			return null;
 		}
 
+	}
+	
+	public float laskeSkaala() {
+		
+		float leveysSkaala = this.pallomeri.stageLeveys() / (float) this.annaLeveys();
+		float korkeusSkaala = this.pallomeri.stageKorkeus() / (float) this.annaKorkeus();
+		
+		// palautetaan se joka on näistä pienempi
+		float skaala = leveysSkaala < korkeusSkaala ? leveysSkaala : korkeusSkaala;
+		
+		// lasketaan vielä keskittämiseen vaaditut siirrot
+		this.xSiirto = (int) ( (this.annaLeveys() * skaala - this.pallomeri.stageLeveys()) / 2 );
+		this.ySiirto = (int) ( (this.annaKorkeus() * skaala - this.pallomeri.stageKorkeus()) / 2);
+		
+		return skaala;
 	}
 
 }
