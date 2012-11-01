@@ -13,11 +13,17 @@ public class Valikko {
 	private PImage esikatselukuva;
 	private float nakymattomyys;
 	private PImage kysymysmerkki;
+	private PImage lataamerkki;
 	
 	public Valikko(int width, int height, Pallomeri p) {
 		this.pallomeri = p;
 		g = this.pallomeri.createGraphics(width, height, PConstants.JAVA2D);
 		this.nakymattomyys = 10;
+		
+		this.lataamerkki = pallomeri.loadImage("data/reload.png");
+		this.kysymysmerkki = this.pallomeri.loadImage("data/kysarimerkki2.png");
+		
+
 	}
 
 	/**
@@ -33,11 +39,12 @@ public class Valikko {
 		}
 		
 		else {
-			this.kysymysmerkki = this.pallomeri.loadImage("data/kysymysmerkki.jpg");
+			//ei kannata varmaan ladata joka kerta, kun piirretään... eli siirsin konstruktoriin...ja kokeilin toisella kuvalla
+			//this.kysymysmerkki = this.pallomeri.loadImage("data/kysymysmerkki.jpg");
 			
-			kysymysmerkki.resize(this.annaLeveys()-60, 0);
+			//kysymysmerkki.resize(this.annaLeveys()-60, 0);
 			
-			g.image(kysymysmerkki, 10, 10);
+			g.image(kysymysmerkki, 15, 10);
 			
 		}
 		
@@ -53,6 +60,8 @@ public class Valikko {
 		
 		g.image(esikatselukuva, 10, 10);*/
 		
+		
+		g.image(lataamerkki, 10, 200);
 
 		g.endDraw(); // lopeta
 	}
@@ -79,4 +88,24 @@ public class Valikko {
 		return this.pallomeri.dist(30+this.pallomeri.stageLeveys(), 60, this.pallomeri.mouseX, this.pallomeri.mouseY) < 50;
 			
 	}
+	
+	public void hiirtaPainettu(){
+		System.out.println("pallomeri.mouseX" + pallomeri.mouseX + "Pallomeri.mouseY " + pallomeri.mouseY);
+		if (over (pallomeri.stageLeveys()+10, 200, 130, 130)){
+			pallomeri.vaihdaKuva(null);
+		}
+		else{}
+		
+		System.out.println("pallomeri.mouseX" + pallomeri.mouseX + "Pallomeri.mouseY " + pallomeri.mouseY);
+	}
+
+	public boolean over (int x, int y, int leveys, int korkeus){
+    if  (pallomeri.mouseX >= x && pallomeri.mouseX <= x + leveys && pallomeri.mouseY >= y && pallomeri.mouseY <= y + korkeus){
+      return true;
+    }
+    else {
+      return false;
+    }
+}
+
 }

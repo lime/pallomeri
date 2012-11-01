@@ -111,8 +111,16 @@ public class Pallomeri extends PApplet {
 				.stageKorkeus()));
 	}
 	
+	
 	public void mousePressed(){
-		vaihdaKuva(null);
+		System.out.println("mouseX" + mouseX + "Pallomeri.mouseY " + mouseY);
+		
+		if (valikko.over (stageLeveys()+30, 220, 80, 80)){
+			vaihdaKuva(null);
+		}
+		else{}
+		
+		//System.out.println("pallomeri.mouseX" + mouseX + "Pallomeri.mouseY " + mouseY);
 	}
 
 	/*
