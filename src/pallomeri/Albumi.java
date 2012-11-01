@@ -1,5 +1,7 @@
 package pallomeri;
 
+import java.util.Random;
+
 public enum Albumi {
 
 	MONALISA, URKKI, NELSON, TOMATSOPPA, YODA;
@@ -17,5 +19,9 @@ public enum Albumi {
 		}
 		return s;
 	
+	}
+	
+	public static Albumi arvokuva() {
+		return Albumi.values()[new Random().nextInt(Albumi.values().length)];
 	}
 }

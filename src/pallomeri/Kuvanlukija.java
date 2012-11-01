@@ -17,13 +17,11 @@ public class Kuvanlukija {
 	private PImage img;
 	private Pallomeri pallomeri;
 	private int xSiirto, ySiirto;
-	public static final String albumikuva[] =
-	{"data/Mona_Lisa.jpg", "data/nelson.jpg"};
 
 	public Kuvanlukija(String kuvannimi, Pallomeri p) {
 		this.pallomeri = p;
 		if (kuvannimi == null) {
-			kuvannimi = arvokuvataulukosta();
+			kuvannimi = Albumi.arvokuva().annakuvannimi();
 		}
 		this.img = pallomeri.loadImage(kuvannimi);
 
@@ -31,9 +29,6 @@ public class Kuvanlukija {
 		// ladataan saadun kuvan pikselit pixels[]-jonoon
 		img.loadPixels();
 
-	}
-	private String arvokuvataulukosta() {
-		return albumikuva [new Random().nextInt(albumikuva.length)];
 	}
 
 	public int annaLeveys() {
