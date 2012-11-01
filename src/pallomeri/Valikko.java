@@ -12,6 +12,7 @@ public class Valikko {
 	private Pallomeri pallomeri;
 	private PImage esikatselukuva;
 	private float nakymattomyys;
+	private PImage kysymysmerkki;
 	
 	public Valikko(int width, int height, Pallomeri p) {
 		this.pallomeri = p;
@@ -27,16 +28,30 @@ public class Valikko {
 
 		g.background(pallomeri.color(58, 63, 64));
 		
-		if(this.hiiriKuvanpaalla() && this.nakymattomyys > 0) {
-			esikatselukuva.filter(PConstants.BLUR, 1);
-		}
-		else if (this.nakymattomyys < 10) {
-			esikatselukuva.filter(PConstants.BLUR, -1);
+		if(this.hiiriKuvanpaalla()) {
+			g.image(esikatselukuva, 10, 10);
 		}
 		
+		else {
+			this.kysymysmerkki = this.pallomeri.loadImage("data/kysymysmerkki.jpg");
+			
+			kysymysmerkki.resize(this.annaLeveys()-60, 0);
+			
+			g.image(kysymysmerkki, 10, 10);
+			
+		}
+		
+		/*if(this.hiiriKuvanpaalla() && this.nakymattomyys > 0) {
+			esikatselukuva.filter(PConstants.BLUR, 1);
+			this.nakymattomyys -= 0.1;
+		}
+		else {
+			esikatselukuva.filter(PConstants.BLUR, -1);
+			this.nakymattomyys += 0.1;
+		}
 
 		
-		g.image(esikatselukuva, 10, 10);
+		g.image(esikatselukuva, 10, 10);*/
 		
 
 		g.endDraw(); // lopeta
@@ -45,6 +60,7 @@ public class Valikko {
 	void paivitaKuva() {
 		esikatselukuva = this.pallomeri.annaLukija().annaKuva();
 		esikatselukuva.resize(this.annaLeveys()-20, 0);
+		
 	}
 
 	public PImage getGraphics() {
@@ -60,7 +76,7 @@ public class Valikko {
 	}
 	
 	public boolean hiiriKuvanpaalla() {
-		return this.pallomeri.dist(10+this.pallomeri.stageLeveys(), 10, this.pallomeri.mouseX, this.pallomeri.mouseY) < 20;
+		return this.pallomeri.dist(30+this.pallomeri.stageLeveys(), 60, this.pallomeri.mouseX, this.pallomeri.mouseY) < 50;
 			
 	}
 }
