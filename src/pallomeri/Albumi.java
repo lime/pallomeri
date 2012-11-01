@@ -11,11 +11,11 @@ public enum Albumi {
 		String s;
 		switch(this){
 		case MONALISA: s= "data/Mona_Lisa.jpg"; break; 
-		case URKKI: s="data/default.jpg"; break;
+		case URKKI: s="data/urho.jpg"; break;
 		case NELSON: s="data/nelson.jpg"; break;
 		case TOMATSOPPA: s="data/tomatsoppa.png"; break;
 		case YODA: s="data/yoda.jpg"; break;
-		default: s=null; break;
+		default: s="data/urho.jpg"; break;
 		}
 		return s;
 	

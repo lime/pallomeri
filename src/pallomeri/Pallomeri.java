@@ -23,7 +23,7 @@ public class Pallomeri extends PApplet {
 		// Koko
 		size(800, 600); // Processing vaatii tarkat arvot
 
-		this.pallot = new HashSet<Pallo>();
+		
 
 		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
 		this.valikko = new Valikko(150, this.height, this);
@@ -46,6 +46,7 @@ public class Pallomeri extends PApplet {
 	public void vaihdaKuva(String kuvanNimi) {
 		// Luodaan uusi Kuvanlukija - jos null, arvotaan kuva Kuvanlukijan
 		// taulukosta
+		this.pallot = new HashSet<Pallo>();
 		this.lukija = new Kuvanlukija(kuvanNimi, this);
 
 		// Lasketaan paras skaalaaus
@@ -108,6 +109,10 @@ public class Pallomeri extends PApplet {
 		Random RAND = new Random();
 		return new Point(RAND.nextInt(this.stageLeveys()), RAND.nextInt(this
 				.stageKorkeus()));
+	}
+	
+	public void mousePressed(){
+		vaihdaKuva(null);
 	}
 
 	/*
