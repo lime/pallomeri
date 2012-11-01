@@ -10,10 +10,13 @@ public class Valikko {
 	
 	private PGraphics g;
 	private Pallomeri pallomeri;
+	private PImage esikatselukuva;
+	private float nakymattomyys;
 	
 	public Valikko(int width, int height, Pallomeri p) {
 		this.pallomeri = p;
 		g = this.pallomeri.createGraphics(width, height, PConstants.JAVA2D);
+		this.nakymattomyys = 10;
 	}
 
 	/**
@@ -24,17 +27,24 @@ public class Valikko {
 
 		g.background(pallomeri.color(58, 63, 64));
 		
-		if(this.hiiriKuvanpaalla() == true) {
-			
-		
-		
-		PImage esikatselukuva = this.pallomeri.annaLukija().annaKuva();
-		esikatselukuva.resize(this.annaLeveys()-20, 0);
-		g.image(esikatselukuva, 10, 10);
+		if(this.hiiriKuvanpaalla() && this.nakymattomyys > 0) {
+			esikatselukuva.filter(PConstants.BLUR, 1);
+		}
+		else if (this.nakymattomyys < 10) {
+			esikatselukuva.filter(PConstants.BLUR, -1);
 		}
 		
 
+		
+		g.image(esikatselukuva, 10, 10);
+		
+
 		g.endDraw(); // lopeta
+	}
+
+	void paivitaKuva() {
+		esikatselukuva = this.pallomeri.annaLukija().annaKuva();
+		esikatselukuva.resize(this.annaLeveys()-20, 0);
 	}
 
 	public PImage getGraphics() {

@@ -63,6 +63,9 @@ public class Pallomeri extends PApplet {
 				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
 			}
 		}
+		
+		//päivitä valikon kuva
+		this.valikko.paivitaKuva();
 	}
 
 	public void draw() {
