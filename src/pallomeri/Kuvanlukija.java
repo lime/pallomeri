@@ -1,5 +1,7 @@
 package pallomeri;
 
+import java.util.Random;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -7,29 +9,34 @@ public class Kuvanlukija {
 	/**
 	 * 
 	 * @param kuvannimi
-	 *            tiedoston nimi, joka pit�isi lukea
-	 * @param applet
+	 *            tiedoston nimi, joka pitäisi lukea
+	 * @param pallomeri
 	 *            se processing-applet jonka yhteydessä ollaan
 	 */
 
-	PImage img;
-	PApplet applet;
+	private PImage img;
+	private Pallomeri pallomeri;
+	private int xSiirto, ySiirto;
 
-	public Kuvanlukija(String kuvannimi, PApplet applet) {
-		this.applet = applet;
+	public Kuvanlukija(String kuvannimi, Pallomeri p) {
+		this.pallomeri = p;
 		if (kuvannimi == null) {
-			kuvannimi = "/data/default.jpg";
+			kuvannimi = Albumi.arvokuva().annakuvannimi();
 		}
-		this.img = applet.loadImage(kuvannimi);
+		this.img = pallomeri.loadImage(kuvannimi);
 
-		/*
-		 * Pitänee ottaa koko huomioon jotenkin...img.resize(applet.width-20,
-		 * 0);
-		 */
-		applet.loadPixels();
+		pallomeri.loadPixels();
 		// ladataan saadun kuvan pikselit pixels[]-jonoon
 		img.loadPixels();
 
+	}
+	
+	//Kuvanlukija, joka luodaan raahatun kuvan yhteydessä
+	public Kuvanlukija(PImage img, Pallomeri p){
+		this.pallomeri  = p;
+		this.img = img;
+		pallomeri.loadPixels();
+		img.loadPixels();
 	}
 
 	public int annaLeveys() {
@@ -59,12 +66,27 @@ public class Kuvanlukija {
 
 		// jos rgb-arvot kunnossa palautetaan sijainti ja väriarvot, muuten null
 		if (loc >= 0 && loc < img.pixels.length) {
-			return new Pallo(x, y, img.pixels[loc]);
+			return new Pallo(x - xSiirto, y - ySiirto, img.pixels[loc], this.pallomeri);
 		} else {
 			System.err.println("Koordinaateissa "+x+","+y+" ei ole pikseleitä.");
 			return null;
 		}
 
+	}
+	
+	public float laskeSkaala() {
+		
+		float leveysSkaala = this.pallomeri.stageLeveys() / (float) this.annaLeveys();
+		float korkeusSkaala = this.pallomeri.stageKorkeus() / (float) this.annaKorkeus();
+		
+		// palautetaan se joka on näistä pienempi
+		float skaala = leveysSkaala < korkeusSkaala ? leveysSkaala : korkeusSkaala;
+		
+		// lasketaan vielä keskittämiseen vaaditut siirrot
+		this.xSiirto = (int) ( (this.annaLeveys() * skaala - this.pallomeri.stageLeveys()) / 2 );
+		this.ySiirto = (int) ( (this.annaKorkeus() * skaala - this.pallomeri.stageKorkeus()) / 2);
+		
+		return skaala;
 	}
 
 }
