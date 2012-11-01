@@ -12,17 +12,16 @@ public class Pallo {
 	private float loppuX, loppuY;
 	private int vari;
 	private float koko;
+	private Pallomeri pallomeri;
 	
-	// Vakiot
-	private static final float SKAALA = 3.0f;
-
-	public Pallo(int x, int y, int color) {
-		this.x = Pallomeri.randomSijainti().x;
-		this.y = Pallomeri.randomSijainti().y;
-		this.loppuX = x * SKAALA;
-		this.loppuY = y * SKAALA;
+	public Pallo(int x, int y, int color, Pallomeri p) {
+		this.pallomeri = p;
+		this.x = pallomeri.randomSijainti().x;
+		this.y = pallomeri.randomSijainti().y;
+		this.loppuX = x * Asetukset.SKAALA;
+		this.loppuY = y * Asetukset.SKAALA;
 		this.vari = color;
-		this.koko = Pallomeri.PIXEL_ASKEL*2; // TODO jonkun arvon perusteella?
+		this.koko = Asetukset.PALLOJEN_KOKO;
 	}
 
 	public float getX() {
@@ -33,15 +32,15 @@ public class Pallo {
 		return y;
 	}
 
-	public void liiku(PApplet applet) {
+	public void liiku() {
 		
 		this.x += laskeSiirto(x, loppuX);
 		this.y += laskeSiirto(y, loppuY);
 		
-		if(applet.mousePressed) {
-			this.x += laskeSiirto(x, applet.mouseX);
-			this.y += laskeSiirto(y, applet.mouseY);
-		}
+		/*if(pallomeri.mousePressed) { // pallo voisi liikkua lähemmäs hiirtä
+			this.x += laskeSiirto(x, pallomeri.mouseX);
+			this.y += laskeSiirto(y, pallomeri.mouseY);
+		}*/
 
 	}
 
@@ -50,14 +49,14 @@ public class Pallo {
 		double matka = paamaara - koordinaatti;
 		double siirto;
 
-		siirto = matka / 300; // hidastuu loppuun päin
+		siirto = matka / Asetukset.VAUHTI; // hidastuu loppuun päin
 		//siirto = matka / Math.pow(matka/5, 4);
 		return siirto;
 	}
 
-	public void piirra(PApplet applet) {
-		applet.fill(this.vari);
-		applet.ellipse(this.x, this.y, this.koko, this.koko);
+	public void piirra() {
+		pallomeri.fill(this.vari);
+		pallomeri.ellipse(this.x, this.y, this.koko, this.koko);
 	}
 
 }

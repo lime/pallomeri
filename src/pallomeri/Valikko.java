@@ -9,14 +9,11 @@ import processing.core.PImage;
 public class Valikko {
 	
 	private PGraphics g;
-	private Pallomeri applet;
-	final float width, height;
+	private Pallomeri pallomeri;
 	
-	public Valikko(int width, int height, Pallomeri applet) {
-		this.width = width;
-		this.height = height;
-		this.applet = applet;
-		g = applet.createGraphics(width, height, PConstants.JAVA2D);
+	public Valikko(int width, int height, Pallomeri p) {
+		this.pallomeri = p;
+		g = this.pallomeri.createGraphics(width, height, PConstants.JAVA2D);
 	}
 
 	/**
@@ -25,14 +22,24 @@ public class Valikko {
 	public void render() {
 		g.beginDraw(); // aloita
 
-		g.background(applet.color(58, 63, 64));
+		g.background(pallomeri.color(58, 63, 64));
 		
-		g.image(this.applet.annaLukija().annaKuva(), 10, 10);
+		PImage esikatselukuva = this.pallomeri.annaLukija().annaKuva();
+		esikatselukuva.resize(this.annaLeveys()-20, 0);
+		g.image(esikatselukuva, 10, 10);
 
 		g.endDraw(); // lopeta
 	}
 
 	public PImage getGraphics() {
 		return g;
+	}
+	
+	public int annaLeveys() {
+		return g.width;
+	}
+
+	public int annaKorkeus() {
+		return g.height;
 	}
 }

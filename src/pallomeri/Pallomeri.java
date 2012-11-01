@@ -13,23 +13,22 @@ public class Pallomeri extends PApplet {
 	private Set<Pallo> pallot;
 	private Valikko valikko;
 	private Kuvanlukija lukija;
-	public static final int WIDTH = 800;
-	private static final int STAGE_HEIGHT = 500;
-	private static final int VALIKKO_HEIGHT = 100;
-	public static final int HEIGHT = STAGE_HEIGHT + VALIKKO_HEIGHT;
-	static final int PIXEL_ASKEL = 5;
 
 	public void setup() {
 		// Koko
-		this.size(WIDTH, HEIGHT);
+		size(800, 600); // Processing vaatii tarkat arvot
 		
 		this.pallot = new HashSet<Pallo>();
 
 		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
-		this.valikko = new Valikko(this.width, VALIKKO_HEIGHT, this);
+		this.valikko = new Valikko(150, this.height, this);
 		
-		// Valitse ensimänen kuva (oletus)
+		// Valitse ensimänen kuva (null = oletus)
 		this.vaihdaKuva(null);
+		
+		// Piirtotyyli
+		noStroke();
+		smooth();
 	}
 
 	/**
@@ -37,35 +36,40 @@ public class Pallomeri extends PApplet {
 	 * @param kuvanNimi
 	 */
 	public void vaihdaKuva(String kuvanNimi) {
-		// Luodaan uusi Kuvanlukija
+		// Luodaan uusi Kuvanlukija - jos null, arvotaan kuva Kuvanlukijan taulukosta
 		this.lukija = new Kuvanlukija(kuvanNimi, this);
+		
+		// Lasketaan paras skaalaaus
+		Asetukset.SKAALA = lukija.laskeSkaala();
 
-		for (int x = 0; x < lukija.annaLeveys(); x += PIXEL_ASKEL) {
-			for (int y = 0; y < lukija.annaKorkeus(); y += PIXEL_ASKEL) {
+		float pikseliVali = (lukija.annaLeveys() / Asetukset.PALLOJEN_MAARA) / Asetukset.SKAALA;
+		System.out.println("Pallomeri.vaihdaKuva()"+pikseliVali+" "+Asetukset.PALLOJEN_MAARA+" "+Asetukset.SKAALA+" "+lukija.annaLeveys());
+		for (int x = 0; x < lukija.annaLeveys(); x += pikseliVali ) {
+			for (int y = 0; y < lukija.annaKorkeus(); y += pikseliVali ) {
 				Pallo pallo = lukija.luePikseli(x, y);
 				this.pallot.add(pallo);
 				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
 			}
 		}
 	}
+	private Albumi arvokuva() {
+		return Albumi.values()[new Random().nextInt(Albumi.values().length)];
+	}
 
 	public void draw() {
-		// Piirtotyyli
-		noStroke();
-		smooth();
 
 		// Piirrä tausta
 		this.background(this.color(32, 38, 39));
 
-		// Päivitä valikko ja piirrä se näytölle
-		this.valikko.render();
-		this.image(valikko.getGraphics(), 0.0f, this.height - valikko.height);
-
 		// Päivitä ja piirrä pallot
 		for (Pallo pallo : this.pallot) {
-			pallo.liiku(this);
-			pallo.piirra(this);
+			pallo.liiku();
+			pallo.piirra();
 		}
+		
+		// Päivitä valikko ja piirrä se näytölle
+		this.valikko.render();
+		this.image(valikko.getGraphics(), this.stageLeveys(), 0f); // piirrä oikealle sivulle
 	}
 
 	/**
@@ -75,9 +79,25 @@ public class Pallomeri extends PApplet {
 	public Kuvanlukija annaLukija() {
 		return this.lukija;
 	}
-
-	public static Point randomSijainti() {
-		Random RAND = new Random();
-		return new Point(RAND.nextInt(WIDTH), RAND.nextInt(HEIGHT));
+	
+	/**
+	 * Leveys ilman valikkoa
+	 */
+	public int stageLeveys() {
+		return this.width - this.valikko.annaLeveys();
 	}
+	
+	public int stageKorkeus() {
+		return this.height;
+	}
+
+	public Point randomSijainti() {
+		Random RAND = new Random();
+		return new Point(RAND.nextInt(this.stageLeveys()), RAND.nextInt(this.stageKorkeus()));
+	}
+	
+	public static void main(String args[])
+    {
+      PApplet.main(new String[] { pallomeri.Pallomeri.class.getName() });
+    }
 }
