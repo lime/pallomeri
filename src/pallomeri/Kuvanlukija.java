@@ -30,6 +30,14 @@ public class Kuvanlukija {
 		img.loadPixels();
 
 	}
+	
+	//Kuvanlukija, joka luodaan raahatun kuvan yhteydessä
+	public Kuvanlukija(PImage img, Pallomeri p){
+		this.pallomeri  = p;
+		this.img = img;
+		pallomeri.loadPixels();
+		img.loadPixels();
+	}
 
 	public int annaLeveys() {
 		return img.width;
