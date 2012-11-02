@@ -55,16 +55,10 @@ public class Pallomeri extends PApplet {
 			this.lukija = new Kuvanlukija(kuvanNimi, this);
 		}
 
-		// Lasketaan paras skaalaaus
-		Asetukset.SKAALA = lukija.laskeSkaala();
+		float pikseliVali = lukija.laskePikseliVali();
 
-		float pikseliVali = (lukija.annaLeveys() / Asetukset.PALLOJEN_MAARA)
-				/ Asetukset.SKAALA;
-		System.out.println("Pallomeri.vaihdaKuva()" + pikseliVali + " "
-				+ Asetukset.PALLOJEN_MAARA + " " + Asetukset.SKAALA + " "
-				+ lukija.annaLeveys());
-		for (int x = 0; x < lukija.annaLeveys(); x += pikseliVali) {
-			for (int y = 0; y < lukija.annaKorkeus(); y += pikseliVali) {
+		for (int x = 0; x < lukija.annaKuvanLeveys(); x += pikseliVali) {
+			for (int y = 0; y < lukija.annaKuvanKorkeus(); y += pikseliVali) {
 				Pallo pallo = lukija.luePikseli(x, y);
 				this.pallot.add(pallo);
 				// System.out.println("Pallomeri.setup() "+pallo.vari+" R:"+red(pallo.vari)+" G:"+green(pallo.vari)+" B:"+blue(pallo.vari));
@@ -73,6 +67,8 @@ public class Pallomeri extends PApplet {
 		
 		//päivitä valikon kuva
 		this.valikko.paivitaKuva();
+		
+		System.err.println("Pallomeri.vaihdaKuva() Palloja yhteensä: " + this.pallot.size());
 	}
 
 	public void draw() {
@@ -109,6 +105,10 @@ public class Pallomeri extends PApplet {
 
 	public int stageKorkeus() {
 		return this.height;
+	}
+	
+	public int stageLyhinReuna() {
+		return Math.min(stageKorkeus(), stageLeveys());
 	}
 
 	public Point randomSijainti() {
