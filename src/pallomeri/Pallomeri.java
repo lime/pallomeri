@@ -19,6 +19,8 @@ public class Pallomeri extends PApplet {
 	private Kuvanlukija lukija;
 	private SDrop sDrop;
 
+	private static final int STAGE_LEVEYS = 650;
+	private static final int STAGE_KORKEUS = 600;
 	public void setup() {
 		// Koko
 		size(800, 600); // Processing vaatii tarkat arvot
@@ -26,7 +28,7 @@ public class Pallomeri extends PApplet {
 		
 
 		// Varsinaista kikkailua jolla saamme valikkoa käyttämään PGraphics:ia
-		this.valikko = new Valikko(150, this.height, this);
+		this.valikko = new Valikko(STAGE_LEVEYS, 0, 150, this.height, this);
 
 		// Valitse ensimänen kuva (null = oletus)
 		this.vaihdaKuva(null, null);
@@ -100,11 +102,11 @@ public class Pallomeri extends PApplet {
 	 * Leveys ilman valikkoa
 	 */
 	public int stageLeveys() {
-		return this.width - this.valikko.annaLeveys();
+		return STAGE_LEVEYS;
 	}
 
 	public int stageKorkeus() {
-		return this.height;
+		return STAGE_KORKEUS;
 	}
 	
 	public int stageLyhinReuna() {
