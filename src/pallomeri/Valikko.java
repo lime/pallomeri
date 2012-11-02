@@ -132,7 +132,7 @@ public class Valikko {
 	}
 
 	public boolean hiiriKuvanpaalla() {
-		return this.pallomeri.dist(30 + this.pallomeri.stageLeveys(), 60,
+		return this.pallomeri.dist(60 + this.pallomeri.stageLeveys(), 60,
 				this.pallomeri.mouseX, this.pallomeri.mouseY) < 50;
 
 	}
