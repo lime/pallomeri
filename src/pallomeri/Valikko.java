@@ -55,8 +55,8 @@ public class Valikko {
 
 		kokoSlider.setLimits(Asetukset.PALLOJEN_KOKO,
 				Asetukset.PALLOJEN_KOKO_MIN, Asetukset.PALLOJEN_KOKO_MAX);
-		maaraSlider.setLimits(Asetukset.PALLOJEN_MAARA,
-				Asetukset.PALLOJEN_MAARA_MIN, Asetukset.PALLOJEN_MAARA_MAX);
+		maaraSlider.setLimits(Asetukset.PALLOJEN_VALI,
+				Asetukset.PALLOJEN_VALI_MIN, Asetukset.PALLOJEN_VALI_MAX);
 		vauhtiSlider.setLimits(Asetukset.VAUHTI, Asetukset.VAUHTI_MIN,
 				Asetukset.VAUHTI_MAX);
 
@@ -165,7 +165,7 @@ public class Valikko {
 	}
 
 	public void maaraMuutos(GWSlider slider) {
-		Asetukset.PALLOJEN_MAARA = slider.getValuef();
+		Asetukset.PALLOJEN_VALI = slider.getValuef();
 	}
 
 	public void vauhtiMuutos(GWSlider slider) {

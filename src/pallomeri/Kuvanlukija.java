@@ -106,9 +106,9 @@ public class Kuvanlukija {
 
 	float laskePikseliVali() {
 		// kuvan leveys skaalattuna sopivaksi
-		float pikseliVali = this.annaKuvanPidempiReuna() / Asetukset.SKAALA;
+		float pikseliVali = Asetukset.PALLOJEN_VALI / Asetukset.SKAALA;
 		// pallojen määrä yhdessä suunnassa määrää miten pitkälle pitää hypätä
-		pikseliVali /= Asetukset.PALLOJEN_MAARA;
+		//pikseliVali /= Asetukset.PALLOJEN_MAARA;
 
 		System.out.println("Kuvanlukija.laskePikseliVali() pikselivali:"
 				+ pikseliVali + " skaala:" + Asetukset.SKAALA

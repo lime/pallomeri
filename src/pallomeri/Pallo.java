@@ -12,7 +12,8 @@ public class Pallo {
 	private float loppuX, loppuY;
 	private int vari;
 	private Pallomeri pallomeri;
-	
+	private boolean[] liikkuu;
+
 	public Pallo(int x, int y, int color, Pallomeri p) {
 		this.pallomeri = p;
 		this.x = pallomeri.randomSijainti().x;
@@ -31,20 +32,20 @@ public class Pallo {
 	}
 
 	public void liiku() {
-		
 		this.x += laskeSiirto(x, loppuX);
 		this.y += laskeSiirto(y, loppuY);
-		
-		/*if(pallomeri.mousePressed) { // pallo voisi liikkua lähemmäs hiirtä
-			this.x += laskeSiirto(x, pallomeri.mouseX);
-			this.y += laskeSiirto(y, pallomeri.mouseY);
-		}*/
+		/*
+		 * if(pallomeri.mousePressed) { // pallo voisi liikkua lähemmäs hiirtä
+		 * this.x += laskeSiirto(x, pallomeri.mouseX); this.y += laskeSiirto(y,
+		 * pallomeri.mouseY); }
+		 */
 
 	}
 
 	private double laskeSiirto(float koordinaatti, float paamaara) {
 		// lasketaan matkan pituus toivottuun päämäärään
 		double matka = paamaara - koordinaatti;
+		// katsotaan jos käyttäisi vähemmän prosessoria
 		double siirto;
 
 		siirto = matka * Asetukset.VAUHTI; // hidastuu loppuun päin
@@ -53,7 +54,8 @@ public class Pallo {
 
 	public void piirra() {
 		pallomeri.fill(this.vari);
-		pallomeri.ellipse(this.x, this.y, Asetukset.PALLOJEN_KOKO, Asetukset.PALLOJEN_KOKO);
+		pallomeri.ellipse(this.x, this.y, Asetukset.PALLOJEN_KOKO,
+				Asetukset.PALLOJEN_KOKO);
 	}
 
 }
