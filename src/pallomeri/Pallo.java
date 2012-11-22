@@ -1,8 +1,6 @@
 package pallomeri;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -14,7 +12,7 @@ public class Pallo {
 	private float loppuX, loppuY;
 	private int vari;
 	private Pallomeri pallomeri;
-	private List<Pallo> liikkuu;
+	private boolean[] liikkuu;
 
 	public Pallo(int x, int y, int color, Pallomeri p) {
 		this.pallomeri = p;
@@ -23,9 +21,6 @@ public class Pallo {
 		this.loppuX = x * Asetukset.SKAALA;
 		this.loppuY = y * Asetukset.SKAALA;
 		this.vari = color;
-		this.liikkuu = new ArrayList<Pallo>();
-		this.liikkuu.add(this);
-		
 	}
 
 	public float getX() {
@@ -39,13 +34,11 @@ public class Pallo {
 	public void liiku() {
 		this.x += laskeSiirto(x, loppuX);
 		this.y += laskeSiirto(y, loppuY);
-
-		if(pallomeri.mousePressed && this.x != this.loppuX && this.y != this.loppuY) {
-			this.x += laskeSiirto(x, pallomeri.mouseX); 
-			this.y += laskeSiirto(y,
-					pallomeri.mouseY);
-			}
-
+		/*
+		 * if(pallomeri.mousePressed) { // pallo voisi liikkua lähemmäs hiirtä
+		 * this.x += laskeSiirto(x, pallomeri.mouseX); this.y += laskeSiirto(y,
+		 * pallomeri.mouseY); }
+		 */
 
 	}
 
